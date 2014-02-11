@@ -3,6 +3,7 @@
 #
 class rabbitmq(
   $port        = 5672,
+  $sslport     = 5671,
   $mnesia_base = '/var/lib/rabbitmq/mnesia',
   $log_base    = '/var/log/rabbitmq',
   $username    = 'guest',
@@ -20,6 +21,7 @@ class rabbitmq(
 
   $config_hash = {
     'port'        => "${port}",
+    'sslport'     => "${sslport}",
     'mnesia_base' => "${mnesia_base}",
     'log_base'    => "${log_base}",
     'username'    => "${username}",
