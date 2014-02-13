@@ -3,10 +3,14 @@
 #
 class rabbitmq::config(
   $port        = 5672,
-  $sslport     = 5671,
+  $ssl_port     = 5671,
+  $ssl         = false,
+  $key_file     = undef,
+  $cert_file    = undef,
+  $ca_cert_file  = undef,
   $mnesia_base = '/var/lib/rabbitmq/mnesia',
   $log_base    = '/var/log/rabbitmq',
-  $username    = 'guest',
+  $user_name    = 'guest',
   $password    = 'guest',
   $node_name   = undef,
 ) {
