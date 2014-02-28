@@ -3,10 +3,14 @@
 #
 class rabbitmq(
   $port        = 5672,
-  $sslport     = 5671,
+  $ssl_port     = 5671,
+  $ssl         = false,
+  $key_file     = undef,
+  $cert_file    = undef,
+  $ca_cert_file  = undef,
   $mnesia_base = '/var/lib/rabbitmq/mnesia',
   $log_base    = '/var/log/rabbitmq',
-  $username    = 'guest',
+  $user_name    = 'guest',
   $password    = 'guest',
   $version     = undef,
   $node_name   = undef,
@@ -21,10 +25,14 @@ class rabbitmq(
 
   $config_hash = {
     'port'        => "${port}",
-    'sslport'     => "${sslport}",
+    'ssl_port'     => "${ssl_port}",
+    'ssl'         => "${ssl}",
+    'key_file'     => "${key_file}",
+    'cert_file'    => "${cert_file}",
+    'ca_cert_file'  => "${ca_cert_file}",
     'mnesia_base' => "${mnesia_base}",
     'log_base'    => "${log_base}",
-    'username'    => "${username}",
+    'user_name'    => "${user_name}",
     'password'    => "${password}",
     'node_name'   => "${node_name}",
   }
@@ -32,7 +40,7 @@ class rabbitmq(
   $config_class = { 'rabbitmq::config' => $config_hash }
 
   create_resources( 'class', $config_class )
-
+  
   package { $rabbitmq::params::erlang_packages:
     ensure  => present,
     require => Class['rabbitmq::epel'],
