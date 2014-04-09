@@ -4,7 +4,6 @@
 class rabbitmq::config(
   $port        = 5672,
   $ssl_port     = 5671,
-  $ssl         = false,
   $key_file     = undef,
   $cert_file    = undef,
   $ca_cert_file  = undef,

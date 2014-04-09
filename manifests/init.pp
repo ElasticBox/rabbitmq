@@ -2,18 +2,17 @@
 # Class rabbitmq
 #
 class rabbitmq(
-  $port        = 5672,
+  $port         = 5672,
   $ssl_port     = 5671,
-  $ssl         = false,
   $key_file     = undef,
   $cert_file    = undef,
-  $ca_cert_file  = undef,
-  $mnesia_base = '/var/lib/rabbitmq/mnesia',
-  $log_base    = '/var/log/rabbitmq',
+  $ca_cert_file = undef,
+  $mnesia_base  = '/var/lib/rabbitmq/mnesia',
+  $log_base     = '/var/log/rabbitmq',
   $user_name    = 'guest',
-  $password    = 'guest',
-  $version     = undef,
-  $node_name   = undef,
+  $password     = 'guest',
+  $version      = undef,
+  $node_name    = undef,
 
 ) {
   
@@ -24,17 +23,16 @@ class rabbitmq(
   Class['rabbitmq::package'] -> Class['rabbitmq::config']
 
   $config_hash = {
-    'port'        => "${port}",
+    'port'         => "${port}",
     'ssl_port'     => "${ssl_port}",
-    'ssl'         => "${ssl}",
     'key_file'     => "${key_file}",
     'cert_file'    => "${cert_file}",
-    'ca_cert_file'  => "${ca_cert_file}",
-    'mnesia_base' => "${mnesia_base}",
-    'log_base'    => "${log_base}",
+    'ca_cert_file' => "${ca_cert_file}",
+    'mnesia_base'  => "${mnesia_base}",
+    'log_base'     => "${log_base}",
     'user_name'    => "${user_name}",
-    'password'    => "${password}",
-    'node_name'   => "${node_name}",
+    'password'     => "${password}",
+    'node_name'    => "${node_name}",
   }
 
   $config_class = { 'rabbitmq::config' => $config_hash }
