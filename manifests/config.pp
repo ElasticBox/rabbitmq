@@ -2,16 +2,16 @@
 # Class rabbitmq::config
 #
 class rabbitmq::config(
-  $port        = 5672,
+  $port         = 5672,
   $ssl_port     = 5671,
   $key_file     = undef,
   $cert_file    = undef,
-  $ca_cert_file  = undef,
-  $mnesia_base = '/var/lib/rabbitmq/mnesia',
-  $log_base    = '/var/log/rabbitmq',
+  $ca_cert_file = undef,
+  $mnesia_base  = '/var/lib/rabbitmq/mnesia',
+  $log_base     = '/var/log/rabbitmq',
   $user_name    = 'guest',
-  $password    = 'guest',
-  $node_name   = undef,
+  $password     = 'guest',
+  $node_name    = undef,
 ) {
   
   File {
