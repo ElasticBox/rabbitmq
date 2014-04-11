@@ -22,9 +22,9 @@
      <% if !(@ca_cert_file.nil? || @ca_cert_file.empty?) %>
      {ssl_listeners, [<%= @ssl_port %>]},
      {ssl_options, 
-         [{cacertfile,"/etc/rabbitmq/ssl/<%= @ca_cert_file %>"},
-             {certfile,"/etc/rabbitmq/ssl/<%= @cert_file %>"},
-             {keyfile,"/etc/rabbitmq/ssl/<%= @key_file %>"},
+         [{cacertfile,"/etc/rabbitmq/ssl/cacert.pem"},
+             {certfile,"/etc/rabbitmq/ssl/server_cert.pem"},
+             {keyfile,"/etc/rabbitmq/ssl/server_key.pem"},
              {verify,verify_none},
              {fail_if_no_peer_cert,false}]},
      <% else %>
