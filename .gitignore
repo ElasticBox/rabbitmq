@@ -1,0 +1,10 @@
+# Eclipse files
+# --------------------
+.metadata/
+.settings/
+
+# Aptana files
+# -------------------
+.project
+.pydevproject
+
