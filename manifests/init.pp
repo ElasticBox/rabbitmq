@@ -49,10 +49,4 @@ class rabbitmq(
     require => Package[$rabbitmq::params::erlang_packages], 
   }
   
-  service { 'rabbitmq-server' :
-    ensure  => running,
-    enable  => true,
-    require => Class['rabbitmq::package']
-  }
-  
 }
