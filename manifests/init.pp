@@ -7,13 +7,12 @@ class rabbitmq(
   $key_path     = undef,
   $cert_path    = undef,
   $ca_cert_path = undef,
+  $version      = undef,
   $mnesia_base  = '/var/lib/rabbitmq/mnesia',
   $log_base     = '/var/log/rabbitmq',
   $user_name    = 'guest',
   $password     = 'guest',
-  $version      = undef,
-  $node_name    = undef,
-
+  $node_name    = 'rabbit@localhost',
 ) {
   
   include 'rabbitmq::epel'
