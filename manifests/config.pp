@@ -11,7 +11,7 @@ class rabbitmq::config(
   $log_base     = '/var/log/rabbitmq',
   $user_name    = 'guest',
   $password     = 'guest',
-  $node_name    = undef,
+  $node_name    = 'rabbit@localhost',
 ) {
   
   File {
