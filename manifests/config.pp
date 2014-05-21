@@ -54,7 +54,7 @@ class rabbitmq::config(
   
   file { '/etc/rabbitmq/rabbitmq-env.conf':
     content => template('rabbitmq/rabbitmq-env.conf.erb'),
-    require => [File[$mnesia_base],File[$log_base]],
+    require => [File["${mnesia_base}/mnesia"],File["$log_base/rabbitmq"]],
   }
   
   file { '/etc/rabbitmq/rabbitmq.config':
