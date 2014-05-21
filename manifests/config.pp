@@ -48,8 +48,9 @@ class rabbitmq::config(
     require   => Exec['rabbitmq-stop'],
   }
   
-  file { $log_base:
+  file { 'rabbitmq_log_base':
     ensure  => directory,
+    path    => $log_base,
     mode    => 0755,
     require => Exec['create_log'],
   }
