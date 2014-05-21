@@ -8,7 +8,7 @@ class rabbitmq::config(
   $cert_path    = undef,
   $ca_cert_path = undef,
   $mnesia_base  = '/var/lib/rabbitmq',
-  $log_base     = '/var/log',
+  $log_base     = '/var/log/rabbitmq',
   $user_name    = 'guest',
   $password     = 'guest',
   $node_name    = 'rabbit@localhost',
@@ -38,23 +38,15 @@ class rabbitmq::config(
     require => File["$mnesia_base"],
   }
   
-  exec { 'create_log':
-    command   => "mkdir -p ${log_base}",
-    path      => '/sbin/:/usr/sbin/:/usr/bin/:/bin/',
-    logoutput => true,
-    unless    => "test -d ${log_base}",
-    require   => Exec['rabbitmq-stop'],
-  }
-  
-  file { "$log_base/rabbitmq":
+  file { "$log_base":
     ensure  => directory,
     mode    => 0755,
-    require => Exec['create_log'],
+    require => Exec['rabbitmq-stop']],
   }
   
   file { '/etc/rabbitmq/rabbitmq-env.conf':
     content => template('rabbitmq/rabbitmq-env.conf.erb'),
-    require => [File["${mnesia_base}/mnesia"],File["$log_base/rabbitmq"]],
+    require => [File["${mnesia_base}/mnesia"],File["$log_base"]],
   }
   
   file { '/etc/rabbitmq/rabbitmq.config':
