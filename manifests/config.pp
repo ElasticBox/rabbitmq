@@ -7,8 +7,8 @@ class rabbitmq::config(
   $key_path     = undef,
   $cert_path    = undef,
   $ca_cert_path = undef,
-  $mnesia_base  = '/var/lib/rabbitmq/mnesia',
-  $log_base     = '/var/log/rabbitmq',
+  $mnesia_base  = '/var/lib/rabbitmq',
+  $log_base     = '/var/log',
   $user_name    = 'guest',
   $password     = 'guest',
   $node_name    = 'rabbit@localhost',
@@ -26,18 +26,16 @@ class rabbitmq::config(
     logoutput => true,
   }
   
-  exec { 'create_mnesia':
-    command   => "mkdir -p ${mnesia_base}",
-    path      => '/sbin/:/usr/sbin/:/usr/bin/:/bin/',
-    logoutput => true,
-    unless    => "test -d ${mnesia_base}",
-    require   => Exec['rabbitmq-stop'],
-  }
-  
   file { $mnesia_base:
     ensure  => directory,
     mode    => 0755,
-    require => Exec['create_mnesia'],
+    require => Exec['rabbitmq-stop'],
+  }
+  
+  file { "${mnesia_base}/mnesia":
+    ensure  => directory,
+    mode    => 0755,
+    require => File["$mnesia_base"],
   }
   
   exec { 'create_log':
@@ -48,9 +46,8 @@ class rabbitmq::config(
     require   => Exec['rabbitmq-stop'],
   }
   
-  file { 'rabbitmq_log_base':
+  file { "$log_base/rabbitmq":
     ensure  => directory,
-    path    => $log_base,
     mode    => 0755,
     require => Exec['create_log'],
   }
