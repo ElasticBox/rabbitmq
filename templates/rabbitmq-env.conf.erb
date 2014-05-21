@@ -1,5 +1,5 @@
-MNESIA_BASE=<%= @mnesia_base %>
-LOG_BASE=<%= @log_base %>
+MNESIA_BASE=<%= @mnesia_base %>/mnesia
+LOG_BASE=<%= @log_base %>/rabbitmq
 <% if @node_name and @node_name != '' %>
 NODENAME=<%= @node_name %>
 <% end %>
