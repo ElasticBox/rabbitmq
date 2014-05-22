@@ -7,7 +7,7 @@ class rabbitmq::config(
   $key_path     = undef,
   $cert_path    = undef,
   $ca_cert_path = undef,
-  $mnesia_base  = '/var/lib/rabbitmq',
+  $mnesia_base  = '/var/lib/rabbitmq/mnesia',
   $log_base     = '/var/log/rabbitmq',
   $user_name    = 'guest',
   $password     = 'guest',
@@ -32,12 +32,6 @@ class rabbitmq::config(
     require => Exec['rabbitmq-stop'],
   }
   
-  file { "${mnesia_base}/mnesia":
-    ensure  => directory,
-    mode    => 0755,
-    require => File["$mnesia_base"],
-  }
-  
   file { "$log_base":
     ensure  => directory,
     mode    => 0755,
@@ -46,7 +40,7 @@ class rabbitmq::config(
   
   file { '/etc/rabbitmq/rabbitmq-env.conf':
     content => template('rabbitmq/rabbitmq-env.conf.erb'),
-    require => [File["${mnesia_base}/mnesia"],File["$log_base"]],
+    require => [File["${mnesia_base}"],File["$log_base"]],
   }
   
   file { '/etc/rabbitmq/rabbitmq.config':
