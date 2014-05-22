@@ -41,7 +41,7 @@ class rabbitmq::config(
   file { "$log_base":
     ensure  => directory,
     mode    => 0755,
-    require => Exec['rabbitmq-stop']],
+    require => Exec['rabbitmq-stop'],
   }
   
   file { '/etc/rabbitmq/rabbitmq-env.conf':
