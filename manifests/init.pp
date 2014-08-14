@@ -38,14 +38,8 @@ class rabbitmq(
 
   create_resources( 'class', $config_class )
   
-  package { $rabbitmq::params::erlang_packages:
-    ensure  => present,
-    require => Class['rabbitmq::epel'],
-  }
-  
   class { 'rabbitmq::package':
-    version => $version,
-    require => Package[$rabbitmq::params::erlang_packages], 
+    version => $version 
   }
   
 }
