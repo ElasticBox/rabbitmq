@@ -38,40 +38,29 @@ class rabbitmq::package(
     }
   }
   elsif ($osfamily == 'Debian') {
-    exec { 'add_apt':
-      command   => "echo 'deb http://www.rabbitmq.com/debian/ testing main' >> /etc/apt/sources.list",
+    exec { 'wget-deb':
+      command   => "wget http://www.rabbitmq.com/releases/rabbitmq-server/v${version}/rabbitmq-server_${version}-1_all.deb",
       path      => '/usr/bin:/usr/sbin:/bin:/sbin',
       logoutput => true,
-      unless    => "cat /etc/apt/sources.list | grep rabbitmq",
+      unless    => "test ! -z $(which rabbitmq-server)",
     }
     
-    exec { 'download_key':
-      command   => "wget http://www.rabbitmq.com/rabbitmq-signing-key-public.asc",
+    exec { 'install-deb':
+      command   => "dpkg -i rabbitmq-server_${version}-1_all.deb",
       path      => '/usr/bin:/usr/sbin:/bin:/sbin',
       logoutput => true,
       unless    => "test ! -z $(which rabbitmq-server)",
-      require   => Exec['add_apt'],
+      tries     => 5,
+      require   => Exec['wget-deb'],
     }
     
-    exec { 'install_key':
-      command   => "apt-key add rabbitmq-signing-key-public.asc",
+    exec { 'clean-deb':
+      command   => "rm -f rabbitmq-server_${version}-1_all.deb",
       path      => '/usr/bin:/usr/sbin:/bin:/sbin',
       logoutput => true,
-      unless    => "test ! -z $(which rabbitmq-server)",
-      require   => Exec['download_key'],
+      unless    => "test ! -f rabbitmq-server_${version}-1_all.deb",
+      require   => Exec['install-deb'],
+    }
     }
 
-    exec { 'apt_update':
-      command   => "apt-get update",
-      path      => '/usr/bin:/usr/sbin:/bin:/sbin',
-      logoutput => true,
-      unless    => "test ! -z $(which rabbitmq-server)",
-      require   => Exec['install_key'],
-    }
-
-    package { 'rabbitmq-server':
-      ensure  => "${version}-1",
-      require => Exec['apt_update'],
-    }
-  }
 }
