@@ -61,6 +61,5 @@ class rabbitmq::package(
       unless    => "test ! -f rabbitmq-server_${version}-1_all.deb",
       require   => Exec['install-deb'],
     }
-    }
-
+  }
 }
