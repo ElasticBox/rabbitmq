@@ -49,7 +49,7 @@ class rabbitmq::package(
       command   => "wget http://www.rabbitmq.com/rabbitmq-signing-key-public.asc",
       path      => '/usr/bin:/usr/sbin:/bin:/sbin',
       logoutput => true,
-      unless    => "test ! -z $(which rabbitmq-server)",
+      unless    => "apt-key list | grep rabbitmq",
       require   => Exec['add_apt'],
     }
     
@@ -57,7 +57,7 @@ class rabbitmq::package(
       command   => "apt-key add rabbitmq-signing-key-public.asc",
       path      => '/usr/bin:/usr/sbin:/bin:/sbin',
       logoutput => true,
-      unless    => "test ! -z $(which rabbitmq-server)",
+      unless    => "apt-key list | grep rabbitmq",
       require   => Exec['download_key'],
     }
 
@@ -65,7 +65,6 @@ class rabbitmq::package(
       command   => "apt-get update",
       path      => '/usr/bin:/usr/sbin:/bin:/sbin',
       logoutput => true,
-      unless    => "test ! -z $(which rabbitmq-server)",
       require   => Exec['install_key'],
     }
 
